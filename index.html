@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Echoes of Love</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+    <!-- ===== ГЛАВНОЕ МЕНЮ ===== -->
+    <div id="menu-screen" class="screen active">
+        <div class="menu-background">
+            <div class="glow-orbit"></div>
+            <div class="glow-orbit" style="animation-delay: 2s; width: 500px; height: 500px; top: 60%; left: 20%;"></div>
+        </div>
+        <div class="menu-content">
+            <h1 class="game-title">✦ Echoes of Love ✦</h1>
+            <p class="subtitle">Твоя история начинается здесь</p>
+            <div class="menu-buttons">
+                <button class="btn-primary" onclick="startGame()">🌙 Начать игру</button>
+                <button class="btn-secondary" onclick="showSettings()">⚙️ Настройки</button>
+            </div>
+            <div class="version">v1.0 • 3 персонажа доступно</div>
+        </div>
+    </div>
+
+    <!-- ===== ИГРОВОЙ ЭКРАН ===== -->
+    <div id="game-screen" class="screen">
+        <!-- Верхняя панель -->
+        <div class="top-bar">
+            <div class="player-info">
+                <span class="avatar">🌸</span>
+                <span class="player-name" id="playerNameDisplay">Игрок</span>
+            </div>
+            <div class="resources">
+                <span class="resource diamonds" id="diamondDisplay">💎 100</span>
+                <span class="resource level" id="levelDisplay">⭐ LVL 1</span>
+            </div>
+        </div>
+
+        <!-- Вкладки -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="chat">💬 Чат</button>
+            <button class="tab-btn" data-tab="gacha">🎰 Гача</button>
+            <button class="tab-btn" data-tab="battle">⚔️ Бой</button>
+            <button class="tab-btn" data-tab="characters">👤 Персы</button>
+        </div>
+
+        <!-- Контент вкладок -->
+        <div class="tab-content">
+
+            <!-- ВКЛАДКА: ЧАТ -->
+            <div id="tab-chat" class="tab-panel active">
+                <!-- Выбор персонажа -->
+                <div class="character-select">
+                    <button class="char-btn active" data-char="luciel">🖤 Люциэль</button>
+                    <button class="char-btn" data-char="alex">💙 Алекс</button>
+                    <button class="char-btn" data-char="kai">🔥 Кай</button>
+                </div>
+                <!-- Окно чата -->
+                <div class="chat-window" id="chatWindow">
+                    <!-- Сообщения будут добавляться сюда -->
+                </div>
+                <!-- Поле ввода -->
+                <div class="chat-input">
+                    <input type="text" id="messageInput" placeholder="Напиши что-нибудь..." />
+                    <button id="sendBtn">➤</button>
+                </div>
+            </div>
+
+            <!-- ВКЛАДКА: ГАЧА -->
+            <div id="tab-gacha" class="tab-panel">
+                <div class="gacha-container">
+                    <div class="gacha-header">
+                        <h2>🎰 Крутить гачу</h2>
+                        <p>50 💎 за попытку</p>
+                    </div>
+                    <div class="gacha-result" id="gachaResult">
+                        <div class="card-slot">
+                            <div class="card-placeholder">✦</div>
+                        </div>
+                        <div class="card-info" id="gachaCardInfo">Нажми "Крутить"</div>
+                    </div>
+                    <button class="btn-primary gacha-btn" onclick="pullGacha()">🌀 Крутить!</button>
+                    <div class="gacha-stats">
+                        <span>📘 R: 50%</span>
+                        <span>📗 SR: 35%</span>
+                        <span>🌟 SSR: 15%</span>
+                    </div>
+                    <div class="collection" id="collectionDisplay">
+                        <p>Ваша коллекция: <span id="collectionCount">0</span> карт</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ВКЛАДКА: БОЙ -->
+            <div id="tab-battle" class="tab-panel">
+                <div class="battle-container">
+                    <div class="battle-header">
+                        <div class="enemy-info">
+                            <span class="enemy-avatar">👾</span>
+                            <span class="enemy-name" id="enemyName">Теневой монстр</span>
+                        </div>
+                        <div class="hp-bars">
+                            <div class="hp-bar">
+                                <span>Враг</span>
+                                <div class="hp-fill enemy-hp" id="enemyHpBar" style="width: 100%"></div>
+                                <span class="hp-text" id="enemyHpText">30/30</span>
+                            </div>
+                            <div class="hp-bar">
+                                <span>Вы</span>
+                                <div class="hp-fill player-hp" id="playerHpBar" style="width: 100%"></div>
+                                <span class="hp-text" id="playerHpText">20/20</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="battle-log" id="battleLog">⚔️ Бой готов!</div>
+                    <div class="battle-actions">
+                        <button class="btn-attack" onclick="battleAttack()">⚔️ Атаковать</button>
+                        <button class="btn-defend" onclick="battleDefend()">🛡️ Защита</button>
+                        <button class="btn-heal" onclick="battleHeal()">💚 Лечение (10💎)</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ВКЛАДКА: ПЕРСОНАЖИ -->
+            <div id="tab-characters" class="tab-panel">
+                <div class="characters-grid" id="charactersGrid">
+                    <!-- Загружается из JS -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== НАСТРОЙКИ (модалка) ===== -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <h2>⚙️ Настройки</h2>
+            <div class="setting-row">
+                <label>Имя игрока</label>
+                <input type="text" id="settingsName" value="Игрок" />
+            </div>
+            <div class="setting-row">
+                <label>Музыка</label>
+                <input type="range" min="0" max="100" value="70" />
+            </div>
+            <button class="btn-primary" onclick="closeSettings()">Закрыть</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
